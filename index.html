@@ -1,0 +1,1573 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COINCUBE — Sovereign Banking</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="./artwork/favicon/favicon-32x32.png"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ── Reset ── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* ── Custom Properties ── */
+      :root {
+        --bg-body: #141414;
+        --bg-card: #1c1c1e;
+        --bg-elevated: #2a2a2c;
+        --border: #3a3a3c;
+        --text-primary: #eeeeee;
+        --text-secondary: #cccccc;
+        --text-muted: #888888;
+        --text-dim: #555555;
+        --accent: #f7931a;
+        --accent-dark: #d4770e;
+        --accent-glow: rgba(247, 147, 26, 0.15);
+        --ink-deep: #050505;
+      }
+
+      /* ── Base ── */
+      html,
+      body {
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg-body);
+        color: var(--text-primary);
+        font-family: "Space Grotesk", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .font-mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+      .font-jp {
+        font-family: "Noto Serif JP", serif;
+      }
+
+      /* ── Slide Container ── */
+      .deck {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 3.5rem 6rem 5rem;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 0;
+        transition:
+          opacity 0.45s ease,
+          transform 0.45s ease;
+        transform: translateX(30px);
+        overflow: hidden;
+      }
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 2;
+        transform: translateX(0);
+      }
+      .slide.exiting {
+        opacity: 0;
+        z-index: 1;
+        transform: translateX(-30px);
+      }
+
+      /* ── Wordmark ── */
+      .wordmark {
+        font-weight: 700;
+        letter-spacing: 0.12em;
+      }
+      .wordmark .coin {
+        color: var(--accent);
+      }
+      .wordmark .cube {
+        color: var(--text-primary);
+      }
+
+      /* ── Typography ── */
+      h1 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+      }
+      h2 {
+        font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 1.25rem;
+      }
+      h3 {
+        font-size: clamp(1.2rem, 2vw, 1.6rem);
+        font-weight: 600;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+      }
+      p {
+        font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+        line-height: 1.6;
+        color: var(--text-secondary);
+        max-width: 60ch;
+      }
+      .lead {
+        font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+        color: var(--text-secondary);
+        max-width: 50ch;
+      }
+      .stat {
+        font-size: clamp(3rem, 6vw, 5rem);
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-top: 0.5rem;
+      }
+      .accent {
+        color: var(--accent);
+      }
+      .muted {
+        color: var(--text-muted);
+      }
+      .dim {
+        color: var(--text-dim);
+      }
+
+      /* ── Two-Column Layout ── */
+      .cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
+      .cols-60-40 {
+        grid-template-columns: 3fr 2fr;
+      }
+      .cols-40-60 {
+        grid-template-columns: 2fr 3fr;
+      }
+
+      /* ── Artwork column — fill available height ── */
+      .art-col {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+      }
+      .art-col .artwork {
+        max-height: 100%;
+        max-width: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+      }
+
+      /* ── Cards ── */
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 0.75rem;
+        padding: 1.75rem;
+      }
+      .card h3 {
+        margin-bottom: 0.75rem;
+      }
+      .card p {
+        font-size: 0.95rem;
+      }
+
+      /* ── Three-card grid ── */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        width: 100%;
+      }
+
+      /* ── Pillar badge ── */
+      .pillar-badge {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+        border: 1px solid var(--accent);
+        border-radius: 2rem;
+        padding: 0.25rem 0.75rem;
+        margin-bottom: 0.75rem;
+      }
+
+      /* ── Artwork ── */
+      .artwork {
+        display: block;
+        max-height: 100%;
+        width: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.4))
+          drop-shadow(0 0 40px var(--accent-glow));
+      }
+      .artwork-sm {
+        max-height: 10rem;
+      }
+      .artwork-md {
+        max-height: 20rem;
+      }
+      .artwork-lg {
+        max-height: 26rem;
+      }
+      .artwork-xl {
+        max-height: 34rem;
+      }
+      .artwork-center {
+        margin: 0 auto;
+      }
+      .artwork-fill {
+        max-height: none;
+        height: 100%;
+        max-width: 100%;
+      }
+
+      /* ── Ensō watermark ── */
+      .enso-bg {
+        position: absolute;
+        width: 60vh;
+        height: 60vh;
+        opacity: 0.04;
+        pointer-events: none;
+        border: 3px solid var(--accent);
+        border-radius: 50%;
+        /* gap in the ensō */
+        border-top-color: transparent;
+        transform: rotate(-30deg);
+      }
+      .enso-bg.right {
+        right: -10vh;
+        top: 10vh;
+      }
+      .enso-bg.left {
+        left: -10vh;
+        bottom: 5vh;
+      }
+      .enso-bg.center {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(-30deg);
+        width: 70vh;
+        height: 70vh;
+      }
+
+      /* ── Seal ── */
+      .seal {
+        position: absolute;
+        bottom: 5rem;
+        right: 3rem;
+        height: 3.5rem;
+        width: auto;
+        opacity: 0.3;
+        filter: drop-shadow(0 0 8px rgba(247, 147, 26, 0.2));
+      }
+
+      /* ── Timeline ── */
+      .timeline {
+        display: flex;
+        gap: 0;
+        width: 100%;
+        margin-top: 2rem;
+      }
+      .timeline-item {
+        flex: 1;
+        position: relative;
+        padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+        border-left: 2px solid var(--border);
+      }
+      .timeline-item:first-child {
+        border-left: 2px solid var(--accent);
+      }
+      .timeline-item .tl-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+      }
+      .timeline-item .tl-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.4rem;
+      }
+      .timeline-item .tl-body {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+      }
+      .timeline-dot {
+        position: absolute;
+        left: -5px;
+        top: 1.4rem;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      /* ── Funnel ── */
+      .funnel {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+      }
+      .funnel-row {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 0.75rem;
+        padding: 1.25rem 2rem;
+        transition: border-color 0.2s;
+      }
+      .funnel-row:nth-child(1) {
+        width: 90%;
+      }
+      .funnel-row:nth-child(2) {
+        width: 72%;
+      }
+      .funnel-row:nth-child(3) {
+        width: 54%;
+      }
+      .funnel-stat {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--accent);
+        white-space: nowrap;
+        min-width: 5rem;
+      }
+      .funnel-label {
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .funnel-desc {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      /* ── Revenue grid ── */
+      .rev-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .rev-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+      }
+      .rev-card .rev-num {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--accent);
+        letter-spacing: 0.1em;
+        margin-bottom: 0.5rem;
+      }
+      .rev-card .rev-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      .rev-card .rev-desc {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+      }
+      .rev-examples {
+        background: var(--bg-card);
+        border: 1px solid var(--accent);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+      }
+      .rev-examples h3 {
+        font-size: 1rem;
+        color: var(--accent);
+        margin-bottom: 0.75rem;
+      }
+      .rev-examples .font-mono {
+        font-size: 0.9rem;
+        line-height: 2;
+        color: var(--text-secondary);
+      }
+
+      /* ── SAFE terms ── */
+      .safe-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-top: 1.5rem;
+      }
+      .safe-box {
+        text-align: center;
+      }
+      .safe-box .safe-val {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .safe-box .safe-lbl {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 0.25rem;
+      }
+      .alloc-bar {
+        display: flex;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        height: 2rem;
+        margin-top: 2rem;
+        width: 100%;
+      }
+      .alloc-bar div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 600;
+      }
+
+      /* ── Nav ── */
+      .nav-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 2rem;
+        background: rgba(20, 20, 20, 0.85);
+        backdrop-filter: blur(12px);
+        border-top: 1px solid var(--border);
+      }
+      .nav-bar .wordmark {
+        font-size: 0.85rem;
+      }
+      .nav-counter {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        font-family: "JetBrains Mono", monospace;
+      }
+      .nav-arrows {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .nav-arrows button {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: 0.4rem;
+        color: var(--text-primary);
+        width: 2rem;
+        height: 2rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        transition: border-color 0.15s;
+      }
+      .nav-arrows button:hover {
+        border-color: var(--accent);
+      }
+
+      /* ── Progress bar ── */
+      .progress-track {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        z-index: 100;
+        background: var(--bg-elevated);
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--accent);
+        transition: width 0.4s ease;
+      }
+
+      /* ── Bullet list ── */
+      .bullets {
+        list-style: none;
+        padding: 0;
+      }
+      .bullets li {
+        position: relative;
+        padding-left: 1.25rem;
+        margin-bottom: 0.6rem;
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+      .bullets li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.55rem;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      /* ── Slide-specific ── */
+      .slide-title {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      .slide-title h1 {
+        font-size: clamp(3rem, 6vw, 5rem);
+        margin-bottom: 1rem;
+      }
+      .slide-title .lead {
+        text-align: center;
+        margin: 0 auto;
+      }
+
+      /* ── JP watermark text ── */
+      .jp-watermark {
+        position: absolute;
+        font-family: "Noto Serif JP", serif;
+        font-size: clamp(6rem, 12vw, 12rem);
+        color: var(--accent);
+        opacity: 0.04;
+        font-weight: 700;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 900px) {
+        .slide {
+          padding: 3rem 2.5rem;
+        }
+        .cols,
+        .cols-60-40,
+        .cols-40-60 {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+        .card-grid {
+          grid-template-columns: 1fr;
+        }
+        .timeline {
+          flex-direction: column;
+        }
+        .funnel-row {
+          width: 100% !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress"></div>
+    </div>
+
+    <div class="deck" id="deck">
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 1 — TITLE
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide slide-title" data-slide="0">
+        <div class="enso-bg center"></div>
+        <img
+          src="./artwork/kage/kage-front.png"
+          alt="Kage"
+          class="artwork artwork-xl artwork-center"
+          style="margin-bottom: 2.5rem; opacity: 0.88"
+        />
+        <h1>
+          <span class="wordmark"
+            ><span class="coin">COIN</span><span class="cube">CUBE</span></span
+          >
+        </h1>
+        <p class="lead" style="text-align: center; margin: 0 auto">
+          Sovereign banking for everyone.
+        </p>
+        <div
+          style="
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+          "
+        >
+          Pre-Seed · 2026
+        </div>
+        <img src="./artwork/kage/kage-seal.png" alt="Seal" class="seal" />
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 2 — THE PROBLEM
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide" data-slide="1">
+        <div class="enso-bg right"></div>
+        <div class="cols cols-60-40">
+          <div>
+            <div class="stat">~$8.5B</div>
+            <div class="stat-label" style="margin-bottom: 2rem">
+              lost in exchange &amp; platform security incidents (2009–2024)
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 1.25rem;
+                margin-top: 1.5rem;
+              "
+            >
+              <div class="card" style="border-left: 3px solid var(--accent)">
+                <h3 style="font-size: 1rem">
+                  A.&ensp;Not your keys, not your coins.
+                </h3>
+                <p style="font-size: 0.9rem">
+                  Exchanges fail, freeze, and vanish. Third-party custody is a
+                  single point of failure.
+                </p>
+              </div>
+              <div class="card" style="border-left: 3px solid var(--accent)">
+                <h3 style="font-size: 1rem">
+                  B.&ensp;Lost your keys, lost your coins.
+                </h3>
+                <p style="font-size: 0.9rem">
+                  Self-custody today is fragile. Lose a seed phrase, lose
+                  everything. No recovery, no inheritance, no safety net.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="art-col">
+            <img
+              src="./artwork/deck/deck-problem.png"
+              alt="Crumbling Institution"
+              class="artwork"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 3 — WHY NOW
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide" data-slide="2">
+        <div class="jp-watermark" style="right: -2rem; top: -3rem">今</div>
+        <h2>Why Now?</h2>
+        <p
+          style="
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+          "
+        >
+          Paper Bitcoin ≠ Bitcoin.<br /><span
+            class="muted"
+            style="font-weight: 400; font-size: 1rem"
+            >Bitcoin had its AOL moment — we know what came after AOL.</span
+          >
+        </p>
+        <div
+          class="card-grid"
+          style="grid-template-columns: 1fr 1fr; gap: 1.25rem"
+        >
+          <div class="card">
+            <h3 style="font-size: 0.95rem">
+              <span class="accent">Preservation, not speculation.</span>
+            </h3>
+            <p style="font-size: 0.85rem">
+              In high-inflation markets, Bitcoin will be used to preserve wealth
+              — but people still need to spend from savings. Lightning, eCash,
+              and Liquid make that possible.
+            </p>
+          </div>
+          <div class="card">
+            <h3 style="font-size: 0.95rem">
+              <span class="accent">Smart vaults are here.</span>
+            </h3>
+            <p style="font-size: 0.85rem">
+              Taproot + Miniscript unlock inheritance, recovery, and policy
+              controls on Bitcoin. The building blocks now exist.
+            </p>
+          </div>
+          <div class="card">
+            <h3 style="font-size: 0.95rem">
+              <span class="accent">Trust is broken.</span>
+            </h3>
+            <p style="font-size: 0.85rem">
+              Mostro P2P protocol and others make fiat on/off-ramp possible
+              without the pain of KYC. Permissionless access to Bitcoin is in
+              demand.
+            </p>
+          </div>
+          <div class="card">
+            <h3 style="font-size: 0.95rem">
+              <span class="accent">AI-powered development.</span>
+            </h3>
+            <p style="font-size: 0.85rem">
+              AI tools are unlocking 10× productivity. A lean team powered by
+              Claude can build what once required a department.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 4 — THE THREE T'S
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide" data-slide="3">
+        <div class="enso-bg left"></div>
+        <div class="cols cols-60-40">
+          <div>
+            <h2 style="margin-bottom: 2rem">
+              Three pillars of<br />sovereign banking.
+            </h2>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem">
+              <div style="display: flex; align-items: flex-start; gap: 1.25rem">
+                <div class="stat" style="font-size: 2.5rem; min-width: 2ch">
+                  T<span
+                    style="
+                      font-size: 1.2rem;
+                      font-weight: 400;
+                      color: var(--text-muted);
+                    "
+                    >1</span
+                  >
+                </div>
+                <div>
+                  <h3 style="margin-bottom: 0.25rem">Translate</h3>
+                  <p style="font-size: 0.9rem">
+                    Move value between fiat and Bitcoin without asking
+                    permission or suffering a proctology exam.
+                  </p>
+                </div>
+              </div>
+              <div style="display: flex; align-items: flex-start; gap: 1.25rem">
+                <div class="stat" style="font-size: 2.5rem; min-width: 2ch">
+                  T<span
+                    style="
+                      font-size: 1.2rem;
+                      font-weight: 400;
+                      color: var(--text-muted);
+                    "
+                    >2</span
+                  >
+                </div>
+                <div>
+                  <h3 style="margin-bottom: 0.25rem">Transact</h3>
+                  <p style="font-size: 0.9rem">
+                    Send, receive, and spend Bitcoin easily — on-chain,
+                    Lightning, Liquid. It should just work.
+                  </p>
+                </div>
+              </div>
+              <div style="display: flex; align-items: flex-start; gap: 1.25rem">
+                <div class="stat" style="font-size: 2.5rem; min-width: 2ch">
+                  T<span
+                    style="
+                      font-size: 1.2rem;
+                      font-weight: 400;
+                      color: var(--text-muted);
+                    "
+                    >3</span
+                  >
+                </div>
+                <div>
+                  <h3 style="margin-bottom: 0.25rem">Transport</h3>
+                  <p style="font-size: 0.9rem">
+                    Move Bitcoin across space and time — securely, with
+                    inheritance, recovery, and policy controls built in.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="art-col">
+            <img
+              src="./artwork/cube/cube-active.png"
+              alt="Active Cube"
+              class="artwork"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 5 — TRANSLATE (BUY/SELL)
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide" data-slide="4">
+        <div class="cols cols-60-40">
+          <div>
+            <div class="pillar-badge">Translate</div>
+            <h2>
+              <span class="wordmark"
+                ><span class="coin">COIN</span
+                ><span class="cube">CUBE</span></span
+              >
+              | Marketplace
+            </h2>
+            <ul class="bullets" style="margin-bottom: 1.5rem">
+              <li>
+                <strong>KYC option</strong> via Meld/Mavapay — direct fiat
+                on-ramp / off-ramp, transact within the app.
+              </li>
+              <li>
+                <strong>P2P option</strong> via Mostro protocol — buy/sell
+                directly with peers, decentralized and secure.
+              </li>
+            </ul>
+            <p style="font-size: 0.9rem">
+              Bitcoin is permissionless money. You shouldn't need permission to
+              buy or sell it. The Marketplace eliminates the friction of moving
+              funds between unsafe exchanges and complex wallets — it's all
+              under one roof.
+            </p>
+          </div>
+          <div class="art-col">
+            <img
+              src="./artwork/deck/deck-marketplace.png"
+              alt="Marketplace"
+              class="artwork"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 6 — TRANSACT (LIQUID)
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide" data-slide="5">
+        <div class="cols cols-60-40">
+          <div>
+            <div class="pillar-badge">Transact</div>
+            <h2>
+              <span class="wordmark"
+                ><span class="coin">COIN</span
+                ><span class="cube">CUBE</span></span
+              >
+              | Liquid
+            </h2>
+            <ul class="bullets" style="margin-bottom: 1.5rem">
+              <li>
+                Real-world utility — move funds to the Liquid Wallet for
+                instant, near-zero-fee payments.
+              </li>
+              <li>Lightning Network and Liquid Network support.</li>
+              <li>
+                Pay merchants or send to friends globally without touching deep
+                cold storage.
+              </li>
+            </ul>
+            <p style="font-size: 0.9rem">
+              The Liquid wallet facilitates daily utility through immediate
+              transactions, providing frictionless access to funds for daily
+              spending.
+            </p>
+          </div>
+          <div class="art-col">
+            <img
+              src="./artwork/deck/deck-liquid.png"
+              alt="Liquid Wallet"
+              class="artwork"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 7 — TRANSPORT: VAULT
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide" data-slide="6">
+        <div class="cols cols-60-40">
+          <div>
+            <div class="pillar-badge">Transport</div>
+            <h2>
+              <span class="wordmark"
+                ><span class="coin">COIN</span
+                ><span class="cube">CUBE</span></span
+              >
+              | Vault
+            </h2>
+            <ul class="bullets" style="margin-bottom: 1.5rem">
+              <li>
+                Advanced multi-sig Bitcoin wallet using
+                <strong>Taproot</strong> and <strong>Miniscript</strong>.
+              </li>
+              <li>
+                Create additional spend paths for
+                <strong>inheritance</strong> and <strong>recovery</strong>.
+              </li>
+              <li>
+                Time-lock funds for forced hold and security. (Coming Soon)
+              </li>
+            </ul>
+            <p style="font-size: 0.9rem">
+              The Vault offers smart custody — manage wealth securely with
+              inheritance recovery and time-locked savings. Peace of mind for
+              the future.
+            </p>
+          </div>
+          <div class="art-col">
+            <img
+              src="./artwork/deck/cube-sealed.png"
+              alt="Vault"
+              class="artwork"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 8 — TRANSPORT: RELAY
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide" data-slide="7">
+        <div class="cols cols-60-40">
+          <div>
+            <div class="pillar-badge">Transport</div>
+            <h2>
+              <span class="wordmark"
+                ><span class="coin">COIN</span
+                ><span class="cube">CUBE</span></span
+              >
+              | Connect
+            </h2>
+            <ul class="bullets" style="margin-bottom: 1.5rem">
+              <li>
+                Easily back up your wallet descriptor with our Connect service.
+              </li>
+              <li>
+                Run your own Bitcoin node — or use our Esplora service free with
+                Connect.
+              </li>
+              <li>
+                Enable <strong>Duress Mode</strong> — have a wrench attack plan
+                already in place.
+              </li>
+              <li>
+                <strong>Powers Legacy</strong> — our inheritance and recovery
+                protocol. Connect is the backbone that makes time-locked
+                recovery and family key onboarding possible.
+              </li>
+            </ul>
+            <p style="font-size: 0.9rem">
+              Our Connect service is the layer that lifts the Vault into a new
+              class of self-custodial wallets — providing backup, node access,
+              duress protection, and the infrastructure behind our Legacy
+              inheritance protocol.
+            </p>
+          </div>
+          <div class="art-col">
+            <img
+              src="./artwork/deck/deck-connect.png"
+              alt="Connect"
+              class="artwork"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 9 — TRANSPORT: KEYCHAIN
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide" data-slide="8">
+        <div class="cols cols-60-40">
+          <div>
+            <div class="pillar-badge">Transport</div>
+            <h2>
+              <span class="wordmark"
+                ><span class="coin">COIN</span
+                ><span class="cube">CUBE</span></span
+              >
+              | Keychain
+            </h2>
+            <ul class="bullets" style="margin-bottom: 1.5rem">
+              <li>
+                Turn any phone into a <strong>Bitcoin signing device</strong>.
+              </li>
+              <li>
+                Easily onboard family and friends for inheritance and social
+                recovery.
+              </li>
+              <li>Works seamlessly with the Vault.</li>
+            </ul>
+            <p style="font-size: 0.9rem">
+              Our companion mobile app acts as your dedicated signing device —
+              simple inheritance, strong security, fewer hardware devices.
+            </p>
+          </div>
+          <div class="art-col">
+            <img
+              src="./artwork/deck/deck-keychain.png"
+              alt="Keychain"
+              class="artwork"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 10 — SUMMARY / VALUE PROP
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide slide-title" data-slide="9">
+        <div class="enso-bg center"></div>
+        <img
+          src="./artwork/kage/kage-seated.png"
+          alt="Kage"
+          class="artwork artwork-lg artwork-center"
+          style="margin-bottom: 2.5rem; opacity: 0.75"
+        />
+        <h2
+          style="
+            max-width: 28ch;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+          "
+        >
+          Sovereign banking<br />for everyone.
+        </h2>
+        <p
+          class="lead"
+          style="text-align: center; margin: 1rem auto 0; max-width: 48ch"
+        >
+          Vault-grade security + inheritance + policy controls, paired with a
+          daily Lightning wallet and P2P buy/sell — packaged for consumers.
+        </p>
+        <p
+          style="
+            text-align: center;
+            margin: 1.5rem auto 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 45ch;
+          "
+        >
+          Translate, Transact, and Transport value in a Bitcoin-native way. No
+          PhD in cryptography required.
+        </p>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 11 — MARKET
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide" data-slide="10">
+        <div class="enso-bg right"></div>
+        <h2 style="margin-bottom: 0.5rem">The market is growing.</h2>
+        <p style="margin-bottom: 2.5rem; max-width: 55ch">
+          If we offer self-custody with great UX and peace of mind, adoption
+          follows.
+        </p>
+        <div class="funnel">
+          <div class="funnel-row">
+            <div class="funnel-stat">365M</div>
+            <div>
+              <div class="funnel-label">
+                Global — Total Bitcoin Owners (2026)
+              </div>
+              <div class="funnel-desc">
+                Crypto.com estimate. Growing 15–20% annually.
+              </div>
+            </div>
+          </div>
+          <div class="funnel-row">
+            <div class="funnel-stat">~180M</div>
+            <div>
+              <div class="funnel-label">
+                Accessible — Smartphone + Desktop Access
+              </div>
+              <div class="funnel-desc">
+                Modeled SAM: TAM × computer access (~60%) × smartphone access
+                (~82%).
+              </div>
+            </div>
+          </div>
+          <div class="funnel-row">
+            <div class="funnel-stat">~1–3M</div>
+            <div>
+              <div class="funnel-label">
+                Beachhead — Serious Savers Seeking Self-Custody
+              </div>
+              <div class="funnel-desc">
+                ≈$1k+ BTC holders actively prioritizing self-custody off
+                exchanges.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 12 — REVENUE
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide" data-slide="11">
+        <h2>Dual-engine revenue.</h2>
+        <div class="cols" style="gap: 2rem; margin-top: 1rem">
+          <div class="rev-grid" style="grid-template-columns: 1fr">
+            <div class="rev-card">
+              <div class="rev-num">ENGINE 1</div>
+              <div class="rev-name">
+                Transaction Revenue
+                <span class="muted" style="font-weight: 400; font-size: 0.85rem"
+                  >(Marketplace)</span
+                >
+              </div>
+              <div class="rev-desc">
+                0.5–1.5% fee / spread per transaction. Primary wallet for
+                savings + spending → transactions become habitual. Revenue
+                scales with volume.
+              </div>
+            </div>
+            <div class="rev-card">
+              <div class="rev-num">ENGINE 2</div>
+              <div class="rev-name">
+                Connect Subscriptions
+                <span class="muted" style="font-weight: 400; font-size: 0.85rem"
+                  >(Keychain + Vault + Legacy features)</span
+                >
+              </div>
+              <div class="rev-desc">
+                <strong style="color: var(--text-primary)">Pro:</strong>
+                policies + security + keychain — $8–15/mo<br />
+                <strong style="color: var(--text-primary)">Legacy:</strong>
+                inheritance + recovery — $20–50/mo<br />
+                <strong style="color: var(--text-primary)">Business:</strong>
+                org multi-sig + admin — $50–200/mo
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="rev-examples">
+              <h3>Revenue Examples</h3>
+              <div class="font-mono">
+                $1,000 BTC buy → <span class="accent">$10</span> revenue<br />
+                $5,000/mo DCA user →
+                <span class="accent">$50/mo</span> revenue<br />
+                Pro subscriber → <span class="accent">$96–$180</span> ARR<br />
+                Legacy subscriber → <span class="accent">$240–$600</span> ARR
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 13 — ROADMAP
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide" data-slide="12">
+        <h2>Traction &amp; Roadmap</h2>
+        <p style="margin-bottom: 1rem">
+          Desktop vault built. Keychain mobile app launching Q2 2026 with Pro
+          and Legacy subscription tiers.
+        </p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="tl-label">Q1 2026</div>
+            <div class="tl-title">Development ✓</div>
+            <div class="tl-body">
+              Desktop vault built &amp; operational. Multi-sig architecture
+              proven. Lightning integration tested.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div
+              class="timeline-dot"
+              style="background: var(--text-muted)"
+            ></div>
+            <div class="tl-label">Q2 2026</div>
+            <div class="tl-title">Keychain Launch</div>
+            <div class="tl-body">
+              iOS &amp; Android launch. Pro &amp; Legacy subscriptions live via
+              desktop app. P2P buy/sell + Lightning payments.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div
+              class="timeline-dot"
+              style="background: var(--text-muted)"
+            ></div>
+            <div class="tl-label">Q2–Q3 2026</div>
+            <div class="tl-title">Pre-Seed Round</div>
+            <div class="tl-body">
+              SAFE at $3M cap / 20% discount. Raising $300K to accelerate
+              growth and expand the team.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div
+              class="timeline-dot"
+              style="background: var(--text-muted)"
+            ></div>
+            <div class="tl-label">Q1 2027</div>
+            <div class="tl-title">Seed Round</div>
+            <div class="tl-body">
+              2–3K AMU · ~400 PMU · ~$50K ARR. Expand to LatAm &amp; SE
+              Asia. $2M raise. Strong metrics for Series A narrative.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 14 — TEAM
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide" data-slide="13">
+        <div class="cols cols-60-40">
+          <div>
+            <h2>Builders with<br />skin in the game.</h2>
+            <div style="margin-top: 1.5rem">
+              <h3 style="color: var(--accent); margin-bottom: 0.25rem">
+                Robert Allen
+              </h3>
+              <p
+                style="
+                  font-size: 0.85rem;
+                  color: var(--text-muted);
+                  margin-bottom: 1rem;
+                "
+              >
+                Founder &amp; CEO
+              </p>
+              <ul class="bullets">
+                <li>
+                  Early Bitcoin pioneer. Former NYC licensed stockbroker (Series
+                  7 &amp; 66).
+                </li>
+                <li>Brokered precious metals under economist Peter Schiff.</li>
+                <li>
+                  Lead developer at Elpis Squared (2021–2024) — acquired by
+                  Itron Inc. for $35M.
+                </li>
+                <li>
+                  Co-founded Satlantis.io in 2024, securing $1M+ in VC funding.
+                </li>
+                <li>Originally launched COINCUBE in 2015.</li>
+              </ul>
+            </div>
+            <div
+              class="card"
+              style="margin-top: 1.5rem; border-left: 3px solid var(--accent)"
+            >
+              <p
+                style="
+                  font-size: 0.95rem;
+                  font-style: italic;
+                  color: var(--text-secondary);
+                "
+              >
+                "We are building the product we needed for ourselves."
+              </p>
+            </div>
+          </div>
+          <div class="art-col">
+            <img
+              src="./artwork/profile-images/satoshisound-transparent.png"
+              alt="Founder"
+              class="artwork"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 15 — THE ASK (SAFE)
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide" data-slide="14">
+        <div class="enso-bg right"></div>
+        <div class="cols">
+          <div>
+            <h2>The Ask</h2>
+            <p
+              style="
+                font-size: 1.1rem;
+                font-weight: 500;
+                color: var(--text-primary);
+                margin-bottom: 0.5rem;
+              "
+            >
+              SAFE Note
+            </p>
+            <p style="margin-bottom: 1.5rem">
+              Simple, founder-friendly terms. Capital goes directly to building.
+            </p>
+            <div class="safe-grid">
+              <div class="safe-box">
+                <div class="safe-val">$3M</div>
+                <div class="safe-lbl">Valuation Cap</div>
+              </div>
+              <div class="safe-box">
+                <div class="safe-val">20%</div>
+                <div class="safe-lbl">Discount</div>
+              </div>
+              <div class="safe-box">
+                <div class="safe-val">$300K</div>
+                <div class="safe-lbl">Raise</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 style="margin-bottom: 1rem">Allocation</h3>
+            <div class="alloc-bar">
+              <div
+                style="
+                  flex: 50;
+                  background: var(--accent);
+                  color: var(--bg-body);
+                "
+              >
+                Growth 50%
+              </div>
+              <div
+                style="
+                  flex: 35;
+                  background: var(--accent-dark);
+                  color: var(--bg-body);
+                "
+              >
+                Engineering 35%
+              </div>
+              <div
+                style="
+                  flex: 15;
+                  background: var(--bg-elevated);
+                  color: var(--text-muted);
+                  border: 1px solid var(--border);
+                "
+              >
+                Ops 15%
+              </div>
+            </div>
+            <div style="margin-top: 2rem">
+              <p
+                style="
+                  font-size: 0.9rem;
+                  color: var(--text-muted);
+                  line-height: 1.7;
+                "
+              >
+                $300K funds growth with product already live.<br />
+                Projected first-year revenue:
+                <span class="accent font-mono" style="font-weight: 600"
+                  >$50K</span
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 16 — CLOSE
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide slide-title" data-slide="15">
+        <div class="enso-bg center"></div>
+        <img
+          src="./artwork/kage/kage-walking-away.png"
+          alt="Kage"
+          class="artwork artwork-lg artwork-center"
+          style="margin-bottom: 1.25rem; opacity: 0.85"
+        />
+        <h1 style="font-size: clamp(2rem, 4vw, 3.5rem)">Partner with us.</h1>
+        <p class="lead" style="text-align: center; margin: 0 auto 1.25rem">
+          Engineer the infrastructure of sovereign banking.
+        </p>
+        <div
+          style="
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            margin-top: 0.5rem;
+          "
+        >
+          <div style="text-align: center">
+            <div
+              style="
+                font-size: 0.7rem;
+                color: var(--accent);
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                margin-bottom: 0.25rem;
+              "
+            >
+              Connect
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-muted)">
+              Telegram, Nostr, X<br />@satoshisound
+            </div>
+          </div>
+          <div style="text-align: center">
+            <div
+              style="
+                font-size: 0.7rem;
+                color: var(--accent);
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                margin-bottom: 0.25rem;
+              "
+            >
+              Website
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-muted)">
+              coincube.io
+            </div>
+          </div>
+          <div style="text-align: center">
+            <div
+              style="
+                font-size: 0.7rem;
+                color: var(--accent);
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                margin-bottom: 0.25rem;
+              "
+            >
+              Email
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-muted)">
+              robert@coincube.io
+            </div>
+          </div>
+        </div>
+        <img src="./artwork/kage/kage-seal.png" alt="Seal" class="seal" />
+      </section>
+    </div>
+    <!-- /deck -->
+
+    <!-- ── Navigation Bar ── -->
+    <nav class="nav-bar">
+      <div class="wordmark" style="font-size: 0.85rem">
+        <span class="coin">COIN</span><span class="cube">CUBE</span>
+      </div>
+      <div class="nav-counter">
+        <span id="current">1</span> / <span id="total">16</span>
+      </div>
+      <div class="nav-arrows">
+        <button onclick="prev()" aria-label="Previous slide">←</button>
+        <button onclick="next()" aria-label="Next slide">→</button>
+      </div>
+    </nav>
+
+    <script>
+      (function () {
+        const slides = document.querySelectorAll(".slide");
+        const total = slides.length;
+        let current = 0;
+
+        document.getElementById("total").textContent = total;
+
+        function show(index) {
+          if (index < 0 || index >= total) return;
+          const old = slides[current];
+          old.classList.remove("active");
+          old.classList.add("exiting");
+          setTimeout(() => old.classList.remove("exiting"), 500);
+
+          current = index;
+          slides[current].classList.add("active");
+          document.getElementById("current").textContent = current + 1;
+          document.getElementById("progress").style.width =
+            ((current + 1) / total) * 100 + "%";
+        }
+
+        // Initialize first slide
+        slides[0].classList.add("active");
+        document.getElementById("progress").style.width =
+          (1 / total) * 100 + "%";
+
+        window.next = function () {
+          show(current + 1);
+        };
+        window.prev = function () {
+          show(current - 1);
+        };
+
+        // Keyboard navigation
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+            e.preventDefault();
+            next();
+          }
+          if (
+            e.key === "ArrowLeft" ||
+            e.key === "PageUp" ||
+            e.key === "Backspace"
+          ) {
+            e.preventDefault();
+            prev();
+          }
+          if (e.key === "Home") {
+            e.preventDefault();
+            show(0);
+          }
+          if (e.key === "End") {
+            e.preventDefault();
+            show(total - 1);
+          }
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        document.addEventListener("touchstart", function (e) {
+          touchStartX = e.touches[0].clientX;
+        });
+        document.addEventListener("touchend", function (e) {
+          const dx = e.changedTouches[0].clientX - touchStartX;
+          if (Math.abs(dx) > 50) {
+            dx < 0 ? next() : prev();
+          }
+        });
+
+        // Click to advance (left third = back, right two-thirds = forward)
+        document.getElementById("deck").addEventListener("click", function (e) {
+          if (
+            e.target.closest(".nav-bar") ||
+            e.target.closest("button") ||
+            e.target.closest("a")
+          )
+            return;
+          const x = e.clientX / window.innerWidth;
+          x < 0.33 ? prev() : next();
+        });
+      })();
+    </script>
+  </body>
+</html>
