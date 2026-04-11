@@ -1,0 +1,12 @@
+{
+	"name": "coincube-deck",
+	"private": true,
+	"version": "0.0.0",
+	"description": "COINCUBE pitch deck — static site hosted on GitHub Pages.",
+	"scripts": {
+		"optimize:images": "node scripts/optimize-images.mjs"
+	},
+	"devDependencies": {
+		"sharp": "^0.33.5"
+	}
+}
