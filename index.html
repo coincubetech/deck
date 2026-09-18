@@ -102,6 +102,42 @@
       .wordmark .cube {
         color: var(--text-primary);
       }
+      .wordmark .tenshu {
+        color: var(--accent);
+      }
+
+      /* ── Product path: COINCUBE | TENSHU | <feature> ── */
+      .product-path {
+        font-size: 0.55em;
+        letter-spacing: 0.1em;
+        vertical-align: 0.18em;
+        margin-right: 0.15em;
+      }
+      .product-path .sep {
+        color: var(--text-dim);
+        margin: 0 0.35em;
+      }
+
+      /* ── Product tier strip ── */
+      .tier-strip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+        margin-top: 1.75rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--border);
+      }
+      .tier-strip .tier-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.2rem;
+      }
+      .tier-strip .tier-desc {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        line-height: 1.45;
+      }
 
       /* ── Typography ── */
       h1 {
@@ -613,11 +649,11 @@
           <source srcset="./artwork/kage/kage-front.avif" type="image/avif" />
           <source srcset="./artwork/kage/kage-front.webp" type="image/webp" />
           <img
-          src="./artwork/kage/kage-front.png"
-          alt="Kage"
-          class="artwork artwork-xl artwork-center"
-          style="margin-bottom: 2.5rem; opacity: 0.88"
-        />
+            src="./artwork/kage/kage-front.png"
+            alt="Kage"
+            class="artwork artwork-xl artwork-center"
+            style="margin-bottom: 2.5rem; opacity: 0.88"
+          />
         </picture>
         <h1>
           <span class="wordmark"
@@ -653,47 +689,86 @@
         <div class="cols cols-60-40">
           <div>
             <div class="stat">~$8.5B</div>
-            <div class="stat-label" style="margin-bottom: 2rem">
+            <div class="stat-label" style="margin-bottom: 1.25rem">
               lost in exchange &amp; platform security incidents (2009–2024)
             </div>
             <div
               style="
                 display: flex;
                 flex-direction: column;
-                gap: 1.25rem;
-                margin-top: 1.5rem;
+                gap: 0.85rem;
+                margin-top: 1rem;
               "
             >
-              <div class="card" style="border-left: 3px solid var(--accent)">
-                <h3 style="font-size: 1rem">
+              <div
+                class="card"
+                style="
+                  border-left: 3px solid var(--accent);
+                  padding: 1.05rem 1.25rem;
+                "
+              >
+                <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem">
                   A.&ensp;Not your keys, not your coins.
                 </h3>
-                <p style="font-size: 0.9rem">
-                  Exchanges fail, freeze, and vanish. Third-party custody is a
-                  single point of failure.
+                <p style="font-size: 0.85rem">
+                  Exchanges fail, freeze, and vanish. Third-party custody puts
+                  every user one counterparty behind a single point of failure.
                 </p>
               </div>
-              <div class="card" style="border-left: 3px solid var(--accent)">
-                <h3 style="font-size: 1rem">
-                  B.&ensp;Lost your keys, lost your coins.
+              <div
+                class="card"
+                style="
+                  border-left: 3px solid var(--accent);
+                  padding: 1.05rem 1.25rem;
+                "
+              >
+                <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem">
+                  B.&ensp;One key, a single point of failure.
                 </h3>
-                <p style="font-size: 0.9rem">
-                  Self-custody today is fragile. Lose a seed phrase, lose
-                  everything. No recovery, no inheritance, no safety net.
+                <p style="font-size: 0.85rem">
+                  The recent Coldcard compromise made it plain: leaving custody
+                  doesn't remove the single point of failure, it just moves it.
+                  One vendor, one device, one seed — one flaw away from zero.
+                </p>
+              </div>
+              <div
+                class="card"
+                style="
+                  border-left: 3px solid var(--accent);
+                  padding: 1.05rem 1.25rem;
+                "
+              >
+                <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem">
+                  C.&ensp;Lost your keys, lost your coins.
+                </h3>
+                <p style="font-size: 0.85rem">
+                  Lose a seed phrase, lose everything. No recovery, no
+                  inheritance, no safety net.
                 </p>
               </div>
             </div>
+            <p
+              style="
+                font-size: 0.85rem;
+                color: var(--accent);
+                margin-top: 1.1rem;
+                max-width: 52ch;
+              "
+            >
+              Every failure above is the same failure: one key, one device, one
+              custodian. We build so no single point can lose your money.
+            </p>
           </div>
           <div class="art-col">
             <picture>
-          <source srcset="./artwork/deck/deck-problem.avif" type="image/avif" />
-          <source srcset="./artwork/deck/deck-problem.webp" type="image/webp" />
-          <img
-              src="./artwork/deck/deck-problem.png"
-              alt="Crumbling Institution"
-              class="artwork"
-            />
-        </picture>
+              <source srcset="./artwork/deck/deck-problem.avif" type="image/avif" />
+              <source srcset="./artwork/deck/deck-problem.webp" type="image/webp" />
+              <img
+                src="./artwork/deck/deck-problem.png"
+                alt="Crumbling Institution"
+                class="artwork"
+              />
+            </picture>
           </div>
         </div>
       </section>
@@ -728,8 +803,8 @@
             </h3>
             <p style="font-size: 0.85rem">
               In high-inflation markets, Bitcoin will be used to preserve wealth
-              — but people still need to spend from savings. Lightning, eCash,
-              and Liquid make that possible.
+              — but people still need to spend from savings. Lightning and
+              instant stablecoin rails make that possible.
             </p>
           </div>
           <div class="card">
@@ -746,9 +821,9 @@
               <span class="accent">Trust is broken.</span>
             </h3>
             <p style="font-size: 0.85rem">
-              Mostro P2P protocol and others make fiat on/off-ramp possible
-              without the pain of KYC. Permissionless access to Bitcoin is in
-              demand.
+              Every layer you're asked to trust — the custodian, the vendor, the
+              node — is a surface for capture. Demand for Bitcoin you hold and
+              verify yourself is rising.
             </p>
           </div>
           <div class="card">
@@ -764,220 +839,189 @@
       </section>
 
       <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 4 — THE FOUR PILLARS
+     SLIDE 4 — THE THREE T'S
      ════════════════════════════════════════════════════════════════ -->
       <section class="slide" data-slide="3">
         <div class="enso-bg left"></div>
         <div class="cols cols-60-40">
           <div>
-            <h2 style="margin-bottom: 1.5rem">
-              Four pillars of<br />sovereign banking.
+            <h2 style="margin-bottom: 1.75rem">
+              Three pillars of<br />sovereign banking.
             </h2>
-            <div style="display: flex; flex-direction: column; gap: 1.1rem">
+            <div style="display: flex; flex-direction: column; gap: 1.25rem">
               <div style="display: flex; align-items: flex-start; gap: 1.25rem">
-                <div class="stat" style="font-size: 2.25rem; min-width: 2ch">
-                  A<span
+                <div class="stat" style="font-size: 2.5rem; min-width: 2ch">
+                  T<span
                     style="
-                      font-size: 1.1rem;
+                      font-size: 1.2rem;
                       font-weight: 400;
                       color: var(--text-muted);
                     "
-                    >01</span
+                    >1</span
                   >
                 </div>
                 <div>
-                  <h3 style="margin-bottom: 0.2rem; font-size: 1.15rem">Acquire</h3>
-                  <p style="font-size: 0.85rem">
+                  <h3 style="margin-bottom: 0.25rem">Translate</h3>
+                  <p style="font-size: 0.9rem">
                     Move value between fiat and Bitcoin without asking
                     permission or suffering a proctology exam.
                   </p>
                 </div>
               </div>
               <div style="display: flex; align-items: flex-start; gap: 1.25rem">
-                <div class="stat" style="font-size: 2.25rem; min-width: 2ch">
-                  S<span
+                <div class="stat" style="font-size: 2.5rem; min-width: 2ch">
+                  T<span
                     style="
-                      font-size: 1.1rem;
+                      font-size: 1.2rem;
                       font-weight: 400;
                       color: var(--text-muted);
                     "
-                    >02</span
+                    >2</span
                   >
                 </div>
                 <div>
-                  <h3 style="margin-bottom: 0.2rem; font-size: 1.15rem">Spend</h3>
-                  <p style="font-size: 0.85rem">
-                    Send and pay anywhere — Lightning, Lightning Address,
-                    Liquid USDT, and other Liquid assets. It just works.
+                  <h3 style="margin-bottom: 0.25rem">Transact</h3>
+                  <p style="font-size: 0.9rem">
+                    Send, receive, and spend Bitcoin — and dollars — easily.
+                    On-chain, Lightning, Spark. It should just work.
                   </p>
                 </div>
               </div>
               <div style="display: flex; align-items: flex-start; gap: 1.25rem">
-                <div class="stat" style="font-size: 2.25rem; min-width: 2ch">
-                  G<span
+                <div class="stat" style="font-size: 2.5rem; min-width: 2ch">
+                  T<span
                     style="
-                      font-size: 1.1rem;
+                      font-size: 1.2rem;
                       font-weight: 400;
                       color: var(--text-muted);
                     "
-                    >03</span
+                    >3</span
                   >
                 </div>
                 <div>
-                  <h3 style="margin-bottom: 0.2rem; font-size: 1.15rem">Grow</h3>
-                  <p style="font-size: 0.85rem">
-                    Earn 3.5–6% APY on a Bitcoin-native stable balance.
-                    No banks, no custodians, no permission slips.
-                  </p>
-                </div>
-              </div>
-              <div style="display: flex; align-items: flex-start; gap: 1.25rem">
-                <div class="stat" style="font-size: 2.25rem; min-width: 2ch">
-                  P<span
-                    style="
-                      font-size: 1.1rem;
-                      font-weight: 400;
-                      color: var(--text-muted);
-                    "
-                    >04</span
-                  >
-                </div>
-                <div>
-                  <h3 style="margin-bottom: 0.2rem; font-size: 1.15rem">Preserve</h3>
-                  <p style="font-size: 0.85rem">
+                  <h3 style="margin-bottom: 0.25rem">Transport</h3>
+                  <p style="font-size: 0.9rem">
                     Move Bitcoin across space and time — securely, with
                     inheritance, recovery, and policy controls built in.
                   </p>
                 </div>
               </div>
             </div>
+            <div class="tier-strip">
+              <div>
+                <div class="tier-name">
+                  <span class="accent font-jp">天守</span> Tenshu
+                </div>
+                <div class="tier-desc">
+                  The desktop keep. Holds the Vault, Spark, and Marketplace.
+                </div>
+              </div>
+              <div>
+                <div class="tier-name">Keychain</div>
+                <div class="tier-desc">
+                  Your phone, turned into a signing device.
+                </div>
+              </div>
+              <div>
+                <div class="tier-name">Connect</div>
+                <div class="tier-desc">
+                  The backbone — backup, recovery, duress.
+                </div>
+              </div>
+            </div>
           </div>
           <div class="art-col">
             <picture>
-          <source srcset="./artwork/cube/cube-active.avif" type="image/avif" />
-          <source srcset="./artwork/cube/cube-active.webp" type="image/webp" />
-          <img
-              src="./artwork/cube/cube-active.png"
-              alt="Active Cube"
-              class="artwork"
-            />
-        </picture>
+              <source srcset="./artwork/cube/cube-active.avif" type="image/avif" />
+              <source srcset="./artwork/cube/cube-active.webp" type="image/webp" />
+              <img
+                src="./artwork/cube/cube-active.png"
+                alt="Active Cube"
+                class="artwork"
+              />
+            </picture>
           </div>
         </div>
       </section>
 
       <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 5 — ACQUIRE (BUY/SELL)
+     SLIDE 5 — TRANSLATE (BUY/SELL)
      ════════════════════════════════════════════════════════════════ -->
       <section class="slide" data-slide="4">
         <div class="cols cols-60-40">
           <div>
-            <div class="pillar-badge">Acquire</div>
+            <div class="pillar-badge">Translate</div>
             <h2>
-              <span class="wordmark"
-                ><span class="coin">COIN</span
-                ><span class="cube">CUBE</span></span
-              >
-              | Marketplace
+              <span class="wordmark product-path"
+                ><span class="coin">COIN</span><span class="cube">CUBE</span
+                ><span class="sep">|</span
+                ><span class="tenshu">TENSHU</span
+                ><span class="sep">|</span></span
+              >Marketplace
             </h2>
+            <div
+              style="
+                display: inline-block;
+                font-size: 0.7rem;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                border: 1px solid var(--border);
+                border-radius: 2rem;
+                padding: 0.2rem 0.7rem;
+                margin-bottom: 1rem;
+              "
+            >
+              In development · targeting Q1 2027
+            </div>
             <ul class="bullets" style="margin-bottom: 1.5rem">
               <li>
-                <strong>KYC option</strong> via Meld/Mavapay — direct fiat
-                on-ramp / off-ramp, transact within the app.
+                <strong>Buy/Sell</strong> via Meld globally and Mavapay in
+                Nigeria — fiat on-ramp / off-ramp, transacted inside the app.
               </li>
               <li>
-                <strong>P2P option</strong> via Mostro protocol — buy/sell
-                directly with peers, decentralized and secure.
+                <strong>Voucher on-ramp</strong> — Azteco integration under
+                evaluation: buy Bitcoin with a paper or digital voucher, no
+                exchange account to open.
               </li>
             </ul>
             <p style="font-size: 0.9rem">
               Bitcoin is permissionless money. You shouldn't need permission to
               buy or sell it. The Marketplace eliminates the friction of moving
               funds between unsafe exchanges and complex wallets — it's all
-              under one roof.
+              under one roof. Held back from launch deliberately: we don't ship
+              money movement until a rail is proven with real money.
             </p>
           </div>
           <div class="art-col">
             <picture>
-          <source srcset="./artwork/deck/deck-marketplace.avif" type="image/avif" />
-          <source srcset="./artwork/deck/deck-marketplace.webp" type="image/webp" />
-          <img
-              src="./artwork/deck/deck-marketplace.png"
-              alt="Marketplace"
-              class="artwork"
-            />
-        </picture>
+              <source srcset="./artwork/deck/deck-marketplace.avif" type="image/avif" />
+              <source srcset="./artwork/deck/deck-marketplace.webp" type="image/webp" />
+              <img
+                src="./artwork/deck/deck-marketplace.png"
+                alt="Marketplace"
+                class="artwork"
+              />
+            </picture>
           </div>
         </div>
       </section>
 
       <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 6 — SPEND (LIQUID)
+     SLIDE 6 — TRANSACT (SPARK)
      ════════════════════════════════════════════════════════════════ -->
       <section class="slide" data-slide="5">
         <div class="cols cols-60-40">
           <div>
-            <div class="pillar-badge">Spend</div>
+            <div class="pillar-badge">Transact</div>
             <h2>
-              <span class="wordmark"
-                ><span class="coin">COIN</span
-                ><span class="cube">CUBE</span></span
-              >
-              | Liquid
-            </h2>
-            <ul class="bullets" style="margin-bottom: 1.5rem">
-              <li>
-                Multi-asset wallet on the Liquid Network — hold and send
-                <strong>L-BTC</strong>, <strong>USDT</strong>, and other Liquid
-                assets.
-              </li>
-              <li>
-                <strong>Stable-dollar payments</strong> without leaving Bitcoin
-                rails — USDT for the dollar-denominated world.
-              </li>
-              <li>
-                Instant, near-zero-fee settlement with confidential transaction
-                amounts.
-              </li>
-              <li>
-                Pay merchants or send to friends globally without touching deep
-                cold storage.
-              </li>
-            </ul>
-            <p style="font-size: 0.9rem">
-              The Liquid wallet is your multi-currency daily driver — Bitcoin
-              when you want sound money, USDT when you want dollar stability,
-              all under self-custody.
-            </p>
-          </div>
-          <div class="art-col">
-            <picture>
-          <source srcset="./artwork/deck/deck-liquid.avif" type="image/avif" />
-          <source srcset="./artwork/deck/deck-liquid.webp" type="image/webp" />
-          <img
-              src="./artwork/deck/deck-liquid.png"
-              alt="Liquid Wallet"
-              class="artwork"
-            />
-        </picture>
-          </div>
-        </div>
-      </section>
-
-      <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 7 — SPEND (SPARK / LIGHTNING)
-     ════════════════════════════════════════════════════════════════ -->
-      <section class="slide" data-slide="6">
-        <div class="jp-watermark" style="right: -2rem; top: -3rem">電</div>
-        <div class="cols cols-60-40">
-          <div>
-            <div class="pillar-badge">Spend</div>
-            <h2>
-              <span class="wordmark"
-                ><span class="coin">COIN</span
-                ><span class="cube">CUBE</span></span
-              >
-              | Spark
+              <span class="wordmark product-path"
+                ><span class="coin">COIN</span><span class="cube">CUBE</span
+                ><span class="sep">|</span
+                ><span class="tenshu">TENSHU</span
+                ><span class="sep">|</span></span
+              >Spark
             </h2>
             <ul class="bullets" style="margin-bottom: 1.5rem">
               <li>
@@ -990,19 +1034,22 @@
                 email address. Anyone can pay you, instantly.
               </li>
               <li>
-                <strong>BOLT11 &amp; LNURL-pay</strong> — full compatibility
-                with the Lightning ecosystem.
+                <strong>Send dollars</strong> — pay USDT and USDC recipients
+                across 30+ networks straight from your Bitcoin balance.
               </li>
               <li>
-                <strong>Single setup, instant access</strong> — Spark and
-                Liquid share one signer for your daily wallets. Vault stays
-                isolated under its own multi-sig policy.
+                <strong>Get paid in dollars</strong> — accept USDT, USDC and
+                100+ other assets; it arrives as Bitcoin in your Spark wallet.
+              </li>
+              <li>
+                <strong>Stable Balance</strong> — hold dollars in-wallet earning
+                <span class="accent">3.5–6%</span>, ready to spend at any time.
               </li>
             </ul>
             <p style="font-size: 0.9rem">
-              Spark powers daily payments — and quietly bridges to the
-              <span class="accent">Grow</span> pillar through its Stable
-              Balance feature.
+              One savings vault, one spending wallet. Spark powers daily
+              payments — and quietly bridges saving and spending through its
+              <span class="accent">Stable Balance</span>.
             </p>
           </div>
           <div class="art-col">
@@ -1011,7 +1058,7 @@
               <source srcset="./artwork/kage/kage-lightning-send.webp" type="image/webp" />
               <img
                 src="./artwork/kage/kage-lightning-send.png"
-                alt="Kage sending Lightning payment"
+                alt="Spark Wallet"
                 class="artwork"
               />
             </picture>
@@ -1020,78 +1067,19 @@
       </section>
 
       <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 8 — GROW (STABLE BALANCE / USDB)
+     SLIDE 7 — TRANSPORT: VAULT
      ════════════════════════════════════════════════════════════════ -->
-      <section class="slide" data-slide="7">
-        <div class="enso-bg right"></div>
+      <section class="slide" data-slide="6">
         <div class="cols cols-60-40">
           <div>
-            <div class="pillar-badge">Grow</div>
-            <h2 style="margin-bottom: 1rem">
-              <span class="wordmark"
-                ><span class="coin">COIN</span
-                ><span class="cube">CUBE</span></span
-              >
-              | Stable Balance
-            </h2>
-            <div class="stat" style="font-size: clamp(2.5rem, 4.5vw, 3.75rem)">
-              3.5–6% <span style="font-size: 0.45em; color: var(--text-muted); font-weight: 500">APY</span>
-            </div>
-            <div class="stat-label" style="margin-bottom: 1.5rem">
-              on a Bitcoin-native stable balance, powered by
-              <span class="accent">USDB</span>
-            </div>
-            <ul class="bullets" style="margin-bottom: 1.25rem">
-              <li>
-                Toggle <strong>Stable Balance</strong> inside Spark —
-                incoming sats auto-convert to USDB internally.
-              </li>
-              <li>
-                One balance, shown in USD. Yield accrues passively while
-                you hold.
-              </li>
-              <li>
-                <strong>Self-custodial throughout</strong> — no banks, no
-                custodians, no permission slips.
-              </li>
-              <li>
-                Convert back to BTC at any time. Spend it through the same
-                Spark wallet.
-              </li>
-            </ul>
-            <p style="font-size: 0.9rem">
-              The first true sovereign savings account — dollar-denominated
-              yield without surrendering custody.
-            </p>
-          </div>
-          <div class="art-col">
-            <picture>
-              <source srcset="./artwork/kage/kage-seated.avif" type="image/avif" />
-              <source srcset="./artwork/kage/kage-seated.webp" type="image/webp" />
-              <img
-                src="./artwork/kage/kage-seated.png"
-                alt="Stable Balance"
-                class="artwork"
-                style="opacity: 0.88"
-              />
-            </picture>
-          </div>
-        </div>
-      </section>
-
-      <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 9 — PRESERVE: VAULT
-     ════════════════════════════════════════════════════════════════ -->
-      <section class="slide" data-slide="8">
-        <div class="cols cols-60-40">
-          <div>
-            <div class="pillar-badge">Preserve</div>
+            <div class="pillar-badge">Transport</div>
             <h2>
-              <span class="wordmark"
-                ><span class="coin">COIN</span
-                ><span class="cube">CUBE</span></span
-              >
-              | Vault
+              <span class="wordmark product-path"
+                ><span class="coin">COIN</span><span class="cube">CUBE</span
+                ><span class="sep">|</span
+                ><span class="tenshu">TENSHU</span
+                ><span class="sep">|</span></span
+              >Vault
             </h2>
             <ul class="bullets" style="margin-bottom: 1.5rem">
               <li>
@@ -1114,78 +1102,25 @@
           </div>
           <div class="art-col">
             <picture>
-          <source srcset="./artwork/deck/cube-sealed.avif" type="image/avif" />
-          <source srcset="./artwork/deck/cube-sealed.webp" type="image/webp" />
-          <img
-              src="./artwork/deck/cube-sealed.png"
-              alt="Vault"
-              class="artwork"
-            />
-        </picture>
+              <source srcset="./artwork/deck/cube-sealed.avif" type="image/avif" />
+              <source srcset="./artwork/deck/cube-sealed.webp" type="image/webp" />
+              <img
+                src="./artwork/deck/cube-sealed.png"
+                alt="Vault"
+                class="artwork"
+              />
+            </picture>
           </div>
         </div>
       </section>
 
       <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 10 — PRESERVE: CONNECT
+     SLIDE 8 — TRANSPORT: KEYCHAIN
      ════════════════════════════════════════════════════════════════ -->
-      <section class="slide" data-slide="9">
+      <section class="slide" data-slide="7">
         <div class="cols cols-60-40">
           <div>
-            <div class="pillar-badge">Preserve</div>
-            <h2>
-              <span class="wordmark"
-                ><span class="coin">COIN</span
-                ><span class="cube">CUBE</span></span
-              >
-              | Connect
-            </h2>
-            <ul class="bullets" style="margin-bottom: 1.5rem">
-              <li>
-                Easily back up your wallet descriptor with our Connect service.
-              </li>
-              <li>
-                Run your own Bitcoin node — or use our Esplora service free with
-                Connect.
-              </li>
-              <li>
-                Enable <strong>Duress Mode</strong> — have a wrench attack plan
-                already in place.
-              </li>
-              <li>
-                <strong>Powers Estate</strong> — our inheritance and recovery
-                protocol. Connect is the backbone that makes time-locked
-                recovery and family key onboarding possible.
-              </li>
-            </ul>
-            <p style="font-size: 0.9rem">
-              Our Connect service is the layer that lifts the Vault into a new
-              class of self-custodial wallets — providing backup, node access,
-              duress protection, and the infrastructure behind our Estate
-              inheritance protocol.
-            </p>
-          </div>
-          <div class="art-col">
-            <picture>
-          <source srcset="./artwork/deck/deck-connect.avif" type="image/avif" />
-          <source srcset="./artwork/deck/deck-connect.webp" type="image/webp" />
-          <img
-              src="./artwork/deck/deck-connect.png"
-              alt="Connect"
-              class="artwork"
-            />
-        </picture>
-          </div>
-        </div>
-      </section>
-
-      <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 11 — PRESERVE: KEYCHAIN
-     ════════════════════════════════════════════════════════════════ -->
-      <section class="slide" data-slide="10">
-        <div class="cols cols-60-40">
-          <div>
-            <div class="pillar-badge">Preserve</div>
+            <div class="pillar-badge">Transport</div>
             <h2>
               <span class="wordmark"
                 ><span class="coin">COIN</span
@@ -1210,32 +1145,85 @@
           </div>
           <div class="art-col">
             <picture>
-          <source srcset="./artwork/deck/deck-keychain.avif" type="image/avif" />
-          <source srcset="./artwork/deck/deck-keychain.webp" type="image/webp" />
-          <img
-              src="./artwork/deck/deck-keychain.png"
-              alt="Keychain"
-              class="artwork"
-            />
-        </picture>
+              <source srcset="./artwork/deck/deck-keychain.avif" type="image/avif" />
+              <source srcset="./artwork/deck/deck-keychain.webp" type="image/webp" />
+              <img
+                src="./artwork/deck/deck-keychain.png"
+                alt="Keychain"
+                class="artwork"
+              />
+            </picture>
           </div>
         </div>
       </section>
 
       <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 12 — SUMMARY / VALUE PROP
+     SLIDE 9 — TRANSPORT: CONNECT
      ════════════════════════════════════════════════════════════════ -->
-      <section class="slide slide-title" data-slide="11">
+      <section class="slide" data-slide="8">
+        <div class="cols cols-60-40">
+          <div>
+            <div class="pillar-badge">Transport</div>
+            <h2>
+              <span class="wordmark"
+                ><span class="coin">COIN</span
+                ><span class="cube">CUBE</span></span
+              >
+              | Connect
+            </h2>
+            <ul class="bullets" style="margin-bottom: 1.5rem">
+              <li>
+                Easily back up your wallet descriptor with our Connect service.
+              </li>
+              <li>
+                Run your own Bitcoin node — or use our Esplora service free with
+                Connect.
+              </li>
+              <li>
+                Enable <strong>Duress Mode</strong> — have a wrench attack plan
+                already in place.
+              </li>
+              <li>
+                <strong>Powers Legacy</strong> — our inheritance and recovery
+                protocol. Connect is the backbone that makes time-locked
+                recovery and family key onboarding possible.
+              </li>
+            </ul>
+            <p style="font-size: 0.9rem">
+              Our Connect service is the layer that lifts the Vault into a new
+              class of self-custodial wallets — providing backup, node access,
+              duress protection, and the infrastructure behind our Legacy
+              inheritance protocol.
+            </p>
+          </div>
+          <div class="art-col">
+            <picture>
+              <source srcset="./artwork/deck/deck-connect.avif" type="image/avif" />
+              <source srcset="./artwork/deck/deck-connect.webp" type="image/webp" />
+              <img
+                src="./artwork/deck/deck-connect.png"
+                alt="Connect"
+                class="artwork"
+              />
+            </picture>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+     SLIDE 10 — SUMMARY / VALUE PROP
+     ════════════════════════════════════════════════════════════════ -->
+      <section class="slide slide-title" data-slide="9">
         <div class="enso-bg center"></div>
         <picture>
-          <source srcset="./artwork/kage/kage-front.avif" type="image/avif" />
-          <source srcset="./artwork/kage/kage-front.webp" type="image/webp" />
+          <source srcset="./artwork/kage/kage-seated.avif" type="image/avif" />
+          <source srcset="./artwork/kage/kage-seated.webp" type="image/webp" />
           <img
-          src="./artwork/kage/kage-front.png"
-          alt="Kage"
-          class="artwork artwork-lg artwork-center"
-          style="margin-bottom: 2.5rem; opacity: 0.75"
-        />
+            src="./artwork/kage/kage-seated.png"
+            alt="Kage"
+            class="artwork artwork-lg artwork-center"
+            style="margin-bottom: 2.5rem; opacity: 0.75"
+          />
         </picture>
         <h2
           style="
@@ -1252,8 +1240,8 @@
           style="text-align: center; margin: 1rem auto 0; max-width: 48ch"
         >
           Vault-grade security + inheritance + policy controls, paired with a
-          daily Lightning wallet, dollar-denominated yield, and P2P buy/sell
-          — packaged for consumers.
+          daily Lightning wallet that spends Bitcoin and dollars anywhere —
+          packaged for consumers.
         </p>
         <p
           style="
@@ -1261,21 +1249,18 @@
             margin: 1.5rem auto 0;
             color: var(--text-muted);
             font-size: 0.95rem;
-            max-width: 50ch;
+            max-width: 45ch;
           "
         >
-          <span class="accent">Acquire</span>,
-          <span class="accent">Spend</span>,
-          <span class="accent">Grow</span>, and
-          <span class="accent">Preserve</span>
-          value in a Bitcoin-native way. No PhD in cryptography required.
+          Translate, Transact, and Transport value in a Bitcoin-native way. No
+          PhD in cryptography required.
         </p>
       </section>
 
       <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 13 — MARKET
+     SLIDE 11 — MARKET
      ════════════════════════════════════════════════════════════════ -->
-      <section class="slide" data-slide="12">
+      <section class="slide" data-slide="10">
         <div class="enso-bg right"></div>
         <h2 style="margin-bottom: 0.5rem">The market is growing.</h2>
         <p style="margin-bottom: 2.5rem; max-width: 55ch">
@@ -1322,14 +1307,34 @@
       </section>
 
       <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 14 — REVENUE
+     SLIDE 12 — REVENUE
      ════════════════════════════════════════════════════════════════ -->
-      <section class="slide" data-slide="13">
+      <section class="slide" data-slide="11">
         <h2>Dual-engine revenue.</h2>
         <div class="cols" style="gap: 2rem; margin-top: 1rem">
           <div class="rev-grid" style="grid-template-columns: 1fr">
             <div class="rev-card">
-              <div class="rev-num">ENGINE 1</div>
+              <div class="rev-num">ENGINE 1 · LIVE</div>
+              <div class="rev-name">
+                Connect Subscriptions
+                <span class="muted" style="font-weight: 400; font-size: 0.85rem"
+                  >(Keychain + Vault + Legacy features)</span
+                >
+              </div>
+              <div class="rev-desc">
+                <strong style="color: var(--text-primary)">Pro:</strong>
+                policies + security + keychain — $8–15/mo<br />
+                <strong style="color: var(--text-primary)">Legacy:</strong>
+                inheritance + recovery — $20–50/mo<br />
+                <strong style="color: var(--text-primary)">Business:</strong>
+                org multi-sig + admin — $50–200/mo
+                <span class="muted" style="font-size: 0.8rem"
+                  >(in development · Q4 2027)</span
+                >
+              </div>
+            </div>
+            <div class="rev-card">
+              <div class="rev-num">ENGINE 2 · Q1 2027</div>
               <div class="rev-name">
                 Transaction Revenue
                 <span class="muted" style="font-weight: 400; font-size: 0.85rem"
@@ -1342,33 +1347,16 @@
                 scales with volume.
               </div>
             </div>
-            <div class="rev-card">
-              <div class="rev-num">ENGINE 2</div>
-              <div class="rev-name">
-                Connect Subscriptions
-                <span class="muted" style="font-weight: 400; font-size: 0.85rem"
-                  >(Keychain + Vault + Estate features)</span
-                >
-              </div>
-              <div class="rev-desc">
-                <strong style="color: var(--text-primary)">Pro:</strong>
-                policies + security + keychain — $8–15/mo<br />
-                <strong style="color: var(--text-primary)">Estate:</strong>
-                inheritance + recovery — $20–50/mo<br />
-                <strong style="color: var(--text-primary)">Business:</strong>
-                org multi-sig + admin — $50–200/mo
-              </div>
-            </div>
           </div>
           <div>
             <div class="rev-examples">
               <h3>Revenue Examples</h3>
               <div class="font-mono">
+                Pro subscriber → <span class="accent">$96–$180</span> ARR<br />
+                Legacy subscriber → <span class="accent">$240–$600</span> ARR<br />
                 $1,000 BTC buy → <span class="accent">$10</span> revenue<br />
                 $5,000/mo DCA user →
-                <span class="accent">$50/mo</span> revenue<br />
-                Pro subscriber → <span class="accent">$96–$180</span> ARR<br />
-                Estate subscriber → <span class="accent">$240–$600</span> ARR
+                <span class="accent">$50/mo</span> revenue
               </div>
             </div>
           </div>
@@ -1376,24 +1364,22 @@
       </section>
 
       <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 15 — ROADMAP
+     SLIDE 13 — ROADMAP
      ════════════════════════════════════════════════════════════════ -->
-      <section class="slide" data-slide="14">
+      <section class="slide" data-slide="12">
         <h2>Traction &amp; Roadmap</h2>
         <p style="margin-bottom: 1rem">
-          Desktop vault built. Spark Lightning + USDB Stable Balance integrated.
-          Keychain mobile app launching Q2 2026 with Pro and Estate subscription
-          tiers.
+          Tenshu, the desktop app, is built and shipping. Keychain mobile app
+          launching with Pro and Legacy subscription tiers.
         </p>
         <div class="timeline">
           <div class="timeline-item">
             <div class="timeline-dot"></div>
-            <div class="tl-label">Q1 2026</div>
+            <div class="tl-label">Q1–Q3 2026</div>
             <div class="tl-title">Development ✓</div>
             <div class="tl-body">
-              Desktop vault built &amp; operational. Multi-sig architecture
-              proven. Spark Lightning wallet + Lightning Address integrated.
-              USDB Stable Balance wired up.
+              Tenshu built &amp; operational. Multi-sig architecture
+              proven. Lightning integration tested.
             </div>
           </div>
           <div class="timeline-item">
@@ -1401,12 +1387,11 @@
               class="timeline-dot"
               style="background: var(--text-muted)"
             ></div>
-            <div class="tl-label">Q2 2026</div>
-            <div class="tl-title">Keychain Launch</div>
+            <div class="tl-label">Q4 2026</div>
+            <div class="tl-title">Public Launch</div>
             <div class="tl-body">
-              iOS &amp; Android launch. Pro &amp; Estate subscriptions live via
-              desktop app. P2P buy/sell, Lightning payments, and Stable Balance
-              yield live for users.
+              Tenshu live on desktop. Keychain on iOS &amp; Android. Pro &amp;
+              Legacy subscriptions live. Spark Lightning + stablecoin payments.
             </div>
           </div>
           <div class="timeline-item">
@@ -1414,11 +1399,11 @@
               class="timeline-dot"
               style="background: var(--text-muted)"
             ></div>
-            <div class="tl-label">Q2–Q3 2026</div>
+            <div class="tl-label">Q4 2026 – Q1 2027</div>
             <div class="tl-title">Pre-Seed Round</div>
             <div class="tl-body">
-              SAFE at $3M cap / 20% discount. Raising $300K to accelerate
-              growth and expand the team.
+              SAFE at $3M cap / 20% discount. Raising $500K — $300K minimum —
+              to accelerate growth and expand the team.
             </div>
           </div>
           <div class="timeline-item">
@@ -1427,19 +1412,19 @@
               style="background: var(--text-muted)"
             ></div>
             <div class="tl-label">Q1 2027</div>
-            <div class="tl-title">Seed Round</div>
+            <div class="tl-title">Marketplace</div>
             <div class="tl-body">
-              2–3K AMU · ~400 PMU · ~$50K ARR. Expand to LatAm &amp; SE
-              Asia. $2M raise. Strong metrics for Series A narrative.
+              Marketplace ships — Buy/Sell via Meld, Azteco vouchers. 2–3K AMU ·
+              ~400 PMU · ~$50K ARR. Expand to LatAm &amp; SE Asia.
             </div>
           </div>
         </div>
       </section>
 
       <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 16 — TEAM
+     SLIDE 14 — TEAM
      ════════════════════════════════════════════════════════════════ -->
-      <section class="slide" data-slide="15">
+      <section class="slide" data-slide="13">
         <div class="cols cols-60-40">
           <div>
             <h2>Builders with<br />skin in the game.</h2>
@@ -1469,12 +1454,6 @@
                 <li>
                   Co-founded Satlantis.io in 2024, securing $1M+ in VC funding.
                 </li>
-                <li>
-                  Originally launched COINCUBE in 2015 as a SaaS cryptocurrency
-                  portfolio management tool — wound down in 2019. After years
-                  of building and learning in the Bitcoin space, relaunched the
-                  brand in 2025 with an entirely new product offering.
-                </li>
               </ul>
             </div>
             <div
@@ -1494,22 +1473,22 @@
           </div>
           <div class="art-col">
             <picture>
-          <source srcset="./artwork/profile-images/satoshisound-transparent.avif" type="image/avif" />
-          <source srcset="./artwork/profile-images/satoshisound-transparent.webp" type="image/webp" />
-          <img
-              src="./artwork/profile-images/satoshisound-transparent.png"
-              alt="Founder"
-              class="artwork"
-            />
-        </picture>
+              <source srcset="./artwork/profile-images/satoshisound-transparent.avif" type="image/avif" />
+              <source srcset="./artwork/profile-images/satoshisound-transparent.webp" type="image/webp" />
+              <img
+                src="./artwork/profile-images/satoshisound-transparent.png"
+                alt="Founder"
+                class="artwork"
+              />
+            </picture>
           </div>
         </div>
       </section>
 
       <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 17 — THE ASK (SAFE)
+     SLIDE 15 — THE ASK (SAFE)
      ════════════════════════════════════════════════════════════════ -->
-      <section class="slide" data-slide="16">
+      <section class="slide" data-slide="14">
         <div class="enso-bg right"></div>
         <div class="cols">
           <div>
@@ -1525,7 +1504,7 @@
               SAFE Note
             </p>
             <p style="margin-bottom: 1.5rem">
-              Simple, founder-friendly terms. Capital goes directly to growth and building.
+              Simple, founder-friendly terms. Capital goes directly to building.
             </p>
             <div class="safe-grid">
               <div class="safe-box">
@@ -1537,8 +1516,14 @@
                 <div class="safe-lbl">Discount</div>
               </div>
               <div class="safe-box">
-                <div class="safe-val">$300K</div>
-                <div class="safe-lbl">Raise</div>
+                <div class="safe-val">$500K</div>
+                <div class="safe-lbl">Target Raise</div>
+              </div>
+              <div class="safe-box">
+                <div class="safe-val" style="color: var(--text-secondary)">
+                  $300K
+                </div>
+                <div class="safe-lbl">Minimum to Close</div>
               </div>
             </div>
           </div>
@@ -1582,7 +1567,9 @@
                   line-height: 1.7;
                 "
               >
-                $300K funds growth with product already live.<br />
+                Round opens at a <strong>$300K minimum</strong> and closes at
+                <strong>$500K</strong> — capital funds growth, not discovery,
+                with the product already live.<br />
                 Projected first-year revenue:
                 <span class="accent font-mono" style="font-weight: 600"
                   >$50K</span
@@ -1594,19 +1581,19 @@
       </section>
 
       <!-- ════════════════════════════════════════════════════════════════
-     SLIDE 18 — CLOSE
+     SLIDE 16 — CLOSE
      ════════════════════════════════════════════════════════════════ -->
-      <section class="slide slide-title" data-slide="17">
+      <section class="slide slide-title" data-slide="15">
         <div class="enso-bg center"></div>
         <picture>
           <source srcset="./artwork/kage/kage-walking-away.avif" type="image/avif" />
           <source srcset="./artwork/kage/kage-walking-away.webp" type="image/webp" />
           <img
-          src="./artwork/kage/kage-walking-away.png"
-          alt="Kage"
-          class="artwork artwork-lg artwork-center"
-          style="margin-bottom: 1.25rem; opacity: 0.85"
-        />
+            src="./artwork/kage/kage-walking-away.png"
+            alt="Kage"
+            class="artwork artwork-lg artwork-center"
+            style="margin-bottom: 1.25rem; opacity: 0.85"
+          />
         </picture>
         <h1 style="font-size: clamp(2rem, 4vw, 3.5rem)">Partner with us.</h1>
         <p class="lead" style="text-align: center; margin: 0 auto 1.25rem">
@@ -1684,7 +1671,7 @@
         <span class="coin">COIN</span><span class="cube">CUBE</span>
       </div>
       <div class="nav-counter">
-        <span id="current">1</span> / <span id="total">18</span>
+        <span id="current">1</span> / <span id="total">16</span>
       </div>
       <div class="nav-arrows">
         <button onclick="prev()" aria-label="Previous slide">←</button>
